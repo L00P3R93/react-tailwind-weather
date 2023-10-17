@@ -35,4 +35,4 @@ const Forecast = ({ item, convertIconToImg }) => {
     )
 }
 
-export default Forecast
+export default Forecasts
