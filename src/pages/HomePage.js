@@ -1,6 +1,6 @@
 import Temperature from '../components/Temperature';
 import TimeAndLocation from '../components/TimeAndLocation';
-import Forecasts from '../components/Forecast';
+import Forecasts from '../components/Forecasts';
 import Loading from '../components/Loading';
 
 import { motion } from 'framer-motion';

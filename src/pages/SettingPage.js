@@ -28,7 +28,7 @@ const SettingPage = ({ weather, setUnits, isMetric, setIsMetric }) => {
                     </p>
                 </div>
                 <div
-                    onClick={handelChangeUnits}
+                    onClick={handleChangeUnits}
                     className="w-full py-4 px-7 mb-10 flex justify-between rounded-full glassEffect"
                 >
                     <p>Temperature based on</p>

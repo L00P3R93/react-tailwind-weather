@@ -1,8 +1,8 @@
-@tailwindcss base;
-@tailwindcss components;
-@tailwindcss utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/*@layer base {
+@layer base {
 	html{
 		font-family: 'Poppins', sans-serif;
 	}
@@ -17,4 +17,4 @@
 .explore-container {
 	grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 	gap: 2rem;
-}*/
+}

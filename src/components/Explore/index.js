@@ -46,3 +46,5 @@ const Explore = ({ city, setQuery}) => {
         </Tilt>
     )
 }
+
+export default Explore;

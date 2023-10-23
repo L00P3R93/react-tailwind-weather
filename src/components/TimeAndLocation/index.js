@@ -1,5 +1,5 @@
 import { TiLocation } from 'react-icons/ti';
-import { formatToLocalTime } from '../services/weatherService';
+import { formatToLocalTime } from '../../services/weatherService';
 
 const TimeAndLocation = ({ weather: { name, dt, timezone, country } }) => {
     return (

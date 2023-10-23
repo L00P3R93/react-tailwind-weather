@@ -1,12 +1,19 @@
 import React from 'react';
 import { RiSearchLine } from 'react-icons/ri';
 import { BiX } from 'react-icons/bi';
+import { SlLocationPin } from 'react-icons/sl';
 import { motion } from 'framer-motion';
 
 import Header from '../components/Header';
 
 const SearchPage = ({ setQuery }) => {
     const [city, setCity] = React.useState('');
+
+    const handelSearchClick = (e) => {
+        if (e.key === 'Enter' && city !== '') {
+            setQuery({ q: city });
+        }
+    }
 
     const handelResetValue = () => {
         setCity('');

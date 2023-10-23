@@ -1,25 +1,36 @@
 import { DateTime } from 'luxon';
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
+const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
 const getWeatherData = async (infoType, searchParams) => {
-    const weatherUrl = new URL(BASE_URL);
-    weatherUrl.search = new URLSearchParams({ ...searchParams, appid: API_KEY });
+    const weatherUrl = new URL(`${BASE_URL}/${infoType}`);
+    const params = new URLSearchParams({ ...searchParams, appid: API_KEY });
+    weatherUrl.search = params;
+
+    //console.log('weatherUrl:', weatherUrl.toString());
+
     const response = await fetch(weatherUrl);
-    const weatherData = await response.json();
-    return weatherData;
+    //console.log('response:', response);
+
+    const jsonData = await response.json();
+    //console.log('jsonData:', jsonData);
+
+    return jsonData;
 };
 
 
-const formatCurrentWeather = (weatherData) => {
-    const { coord, main, name, dt, sys, weather, wind } = weatherData;
-    const { lat, lon } = coord;
-    const { temp, feels_like, temp_min, temp_max, humidity } = main;
-    const { country, sunrise, sunset } = sys;
+const formatCurrentWeather = (data) => {
+    const {
+        coord: { lat, lon },
+        main: { temp, feels_like, temp_min, temp_max, humidity },
+        name,
+        dt,
+        sys: { country, sunrise, sunset },
+        weather,
+        wind: { speed },
+    } = data;
     const { main: detail, icon } = weather[0];
-    const { speed } = wind;
-
     return {
         lat,
         lon,
@@ -33,9 +44,9 @@ const formatCurrentWeather = (weatherData) => {
         country,
         sunrise,
         sunset,
+        speed,
         detail,
         icon,
-        speed,
     };
 }
 
@@ -60,22 +71,20 @@ const formatForecastWeather = (data) => {
 }
 
 const getFormattedWeatherData = async (searchParams) => {
-    const formattedCurrentWeather = await getWeatherData(
-        'weather',
-        searchParams,
-    ).then(formatCurrentWeather)
+    const formattedCurrentWeather = await getWeatherData('weather', searchParams)
+        .then(formatCurrentWeather);
+    console.log('Formatted Current Weather:', formattedCurrentWeather);
 
-    const { lat, lon } = formatCurrentWeather;
+    const { lat, lon } = formattedCurrentWeather;
 
-    const formattedForecastWeather = await getWeatherData(
-        'onecall',
-        {
+    const formattedForecastWeather = await getWeatherData('onecall', {
             lat,
             lon,
             exclude: 'current,minutely,alerts',
             units: searchParams.units,
-        }
-    ).then(data => formatForecastWeather())
+        })
+        .then(formatForecastWeather);
+    console.log('Formatted Forecast Weather: ', formattedForecastWeather);
 
     return { ...formattedCurrentWeather, ...formattedForecastWeather };
 }
